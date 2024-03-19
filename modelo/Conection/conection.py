@@ -52,7 +52,7 @@ def Consult_data_from_TABLE_DETECTED_PSH_URL():
     results = data["results"]
     return results 
 
-test = Consult_data_from_TABLE_USER()
+test = Consult_data_from_TABLE_USER
 for page in test:
    idurl=page["nombre_Usuario"]
    url= page["password"]
