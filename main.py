@@ -1,6 +1,10 @@
-class acortadorUrl:
+class AcortadorUrl:
 
     def __init__(self) -> None:
+        self.detector_url_pishing()
+        pass
+
+    def detector_url_pishing(self):
         pass
 
     def verificar_protocolo(self, url):
@@ -12,3 +16,9 @@ class acortadorUrl:
 
     def acortar_url(self, url):
         pass
+
+    def verificar_pishing(self,url_pishing):
+        if url_pishing == 1:
+            return "Es_Pishing"
+        else:
+            return "Acortar"
