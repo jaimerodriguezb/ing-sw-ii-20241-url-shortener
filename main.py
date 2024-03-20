@@ -7,6 +7,10 @@ class AcortadorUrl:
     def detector_url_pishing(self):
         pass
 
+    '''Se debe usar un REGEX para realizar el HTTPS o HTTP
+        Pagina para las expresiones regulares:
+        https://regex101.com/'''
+    
     def verificar_protocolo(self, url):
         verificar_cadena_url=url[:8]
         if(verificar_cadena_url[:7]=="http://" or verificar_cadena_url[:8]=="https://"):
