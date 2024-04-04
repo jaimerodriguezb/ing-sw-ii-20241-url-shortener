@@ -4,17 +4,18 @@ import os
 from urllib.parse import urlparse
 import re
 from googlesearch import search
+import numpy as np
+from tld import get_tld
 
 class AcortadorUrl:
 
     def __init__(self) -> None:
-        self.__load_model()
         self.__model = None
-        pass
+        self.__load_model()
 
     def __load_model(self):
         """Load the model to self.__model once it's been trainned"""
-        #self.__model = joblib.load(os.path.dirname(__file__) + '\\training\\predictor_phishing_model.pkl') 
+        self.__model = joblib.load(os.path.dirname(__file__) + "\\training\\predictor_phishing_model.pkl") 
     
     def verificar_protocolo(self, url):
         verificar_cadena_url=url[:8]
@@ -26,11 +27,16 @@ class AcortadorUrl:
     def acortar_url(url):
         pass
 
-    def verificar_pishing(url_pishing):
-        if url_pishing == 1:
+    def verificar_pishing(self, url_pishing):
+        url_parsed = self.parse_url(url_pishing)
+        url_parsed = np.array(url_parsed).reshape((1, -1))
+        pred = self.__model.predict(url_parsed)
+
+        if int(pred[0]) == 1:
             return "Es_Pishing"
         else:
             return "Acortar"
+
         
     def having_ip_address(self, url):
         match = re.search(
@@ -97,6 +103,9 @@ class AcortadorUrl:
     def count_https(self, url):
         return url.count('https')
     
+    def count_http(self, url):
+        return url.count('http')
+
     def count_per(self, url):
         return url.count('%')
     
@@ -154,42 +163,27 @@ class AcortadorUrl:
 
         status = []
 
-        status.append(having_ip_address(url))
-        status.append(abnormal_url(url))
-        status.append(count_dot(url))
-        status.append(count_www(url))
-        status.append(count_atrate(url))
-        status.append(no_of_dir(url))
-        status.append(no_of_embed(url))
-
-        status.append(shortening_service(url))
-        status.append(count_https(url))
-        status.append(count_http(url))
-
-        status.append(count_per(url))
-        status.append(count_ques(url))
-        status.append(count_hyphen(url))
-        status.append(count_equal(url))
-
-        status.append(url_length(url))
-        status.append(hostname_length(url))
-        status.append(suspicious_words(url))
-        status.append(digit_count(url))
-        status.append(letter_count(url))
-        status.append(fd_length(url))
+        status.append(self.having_ip_address(url))
+        status.append(self.abnormal_url(url))
+        status.append(self.count_dot(url))
+        status.append(self.count_www(url))
+        status.append(self.count_atrate(url))
+        status.append(self.no_of_dir(url))
+        status.append(self.no_of_embed(url))
+        status.append(self.shortening_service(url))
+        status.append(self.count_https(url))
+        status.append(self.count_http(url))
+        status.append(self.count_per(url))
+        status.append(self.count_ques(url))
+        status.append(self.count_hyphen(url))
+        status.append(self.count_equal(url))
+        status.append(self.url_length(url))
+        status.append(self.hostname_length(url))
+        status.append(self.suspicious_words(url))
+        status.append(self.digit_count(url))
+        status.append(self.letter_count(url))
+        status.append(self.fd_length(url))
         tld = get_tld(url,fail_silently=True)
-        status.append(tld_length(tld))
+        status.append(self.tld_length(tld))
 
         return status
-    
-    def get_prediction_from_url(model,test_url):
-        features_test = parse_url(test_url)
-        features_test = np.array(features_test).reshape((1, -1))
-        pred = model.predict(features_test)
-
-        if int(pred[0]) == 0:
-            res="SAFE"
-            return res
-        elif int(pred[0]) == 1:
-            res="PHISHING"
-            return res
