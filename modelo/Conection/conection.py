@@ -115,7 +115,6 @@ def Delete_user_by_email(correo):
 # Ejemplo de uso
 # Crear un nuevo usuario
 print(Create_new_user("Ejemplo Usuario", "ejemplo@correo.com", "contraseña123"))
-print(Create_new_user("Ejemplo", "c@w.com", "contraseña123"))
 
 # Modificar el conteo de URL acortadas para un usuario
 #print(Modify_conteo_URL_acortadas("ejemplo@correo.com", 10))
@@ -189,13 +188,10 @@ def Create_new_URL(user_email, URL):
 
 # Ejemplo de uso
 user_email = "ejemplo@correo.com"
-user_email2 ="c@w.com"
 URL = "https://www.ejemplo.com"
 URL1 = "https://www.asdsadsadsa.com"
-URL2 = "https://www.nan.com"
 print(Create_new_URL(user_email, URL))
 print(Create_new_URL(user_email, URL1))
-print(Create_new_URL(user_email2, URL2))
 
 def get_urls_for_user(user_email):
     # Obtener el ID del usuario basado en el correo electrónico
@@ -226,14 +222,6 @@ def get_urls_for_user(user_email):
 
 # Ejemplo de uso
 user_email = "ejemplo@correo.com"
-user_urls = get_urls_for_user(user_email)
-print("URLs asociadas al usuario:")
-for url_data in user_urls:
-    print(url_data)
-
-print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-
-user_email = "c@w.com"
 user_urls = get_urls_for_user(user_email)
 print("URLs asociadas al usuario:")
 for url_data in user_urls:
