@@ -33,9 +33,9 @@ class AcortadorUrl:
         pred = self.__model.predict(url_parsed)
 
         if int(pred[0]) == 1:
-            return "Es_Pishing"
+            return 0#"Es_Pishing"
         else:
-            return "Acortar"
+            return 1#"Acortar"
 
         
     def having_ip_address(self, url):
