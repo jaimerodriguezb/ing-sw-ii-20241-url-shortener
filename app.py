@@ -25,7 +25,7 @@ parser.add_argument(
     location='args')
 
 resource_fields = api.model('Resource', {
-    'result': fields.Integer,
+    'result': fields.String,
 })
 
 @ns.route('/shorten')
@@ -37,9 +37,8 @@ class Acortar(Resource):
         args = parser.parse_args()
 
         return {
-         "result": acortador.verificar_pishing(args['url'])
+         "result": 'Su url acortada es: '+ acortador.acortar_url(args['url'])
         }, 200
-    
     
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=False, host='0.0.0.0', port=5000)

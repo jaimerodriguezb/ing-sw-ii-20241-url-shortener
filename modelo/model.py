@@ -6,6 +6,7 @@ import re
 from googlesearch import search
 import numpy as np
 from tld import get_tld
+import binascii
 
 class AcortadorUrl:
 
@@ -18,14 +19,22 @@ class AcortadorUrl:
         self.__model = joblib.load(os.path.dirname(__file__) + "\\training\\predictor_phishing_model.pkl") 
     
     def verificar_protocolo(self, url):
-        verificar_cadena_url=url[:8]
+        #verificar_cadena_url=url[:8]
         if(r"^(http|https)://"):
             return  True
         else:
             return False
+    def base62_encode(self, value):
+        value = int(value)
+        base62chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+        base = len(base62chars)
+        encoded = ''
+        while value > 0:
+            remainder = value % base
+            encoded = base62chars[remainder] + encoded
+            value = int(value / base)
 
-    def acortar_url(url):
-        pass
+        return encoded
 
     def verificar_pishing(self, url_pishing):
         url_parsed = self.parse_url(url_pishing)
@@ -33,10 +42,16 @@ class AcortadorUrl:
         pred = self.__model.predict(url_parsed)
 
         if int(pred[0]) == 1:
-            return 0#"Es_Pishing"
+            return "Es_Pishing"
         else:
-            return 1#"Acortar"
+            return "Acortar"
 
+    def acortar_url(self, url_acortar):
+        if(self.verificar_pishing(url_acortar) == "Es_Pishing"):
+            return "No es posible Acortar la URL, tiene riesgos de Pishing"
+        
+        else:   
+            return self.base62_encode(binascii.crc32(url_acortar.encode()))
         
     def having_ip_address(self, url):
         match = re.search(
