@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect
 from flask_restx import Api, Resource, fields
 from flask_cors import CORS
 from modelo.model import AcortadorUrl
