@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect, url_for
 from flask_restx import Api, Resource, fields
 from flask_cors import CORS
 from modelo.model import AcortadorUrl
@@ -39,6 +39,10 @@ class Acortar(Resource):
         return {
          "result": 'Su url acortada es: '+ acortador.acortar_url(args['url'])
         }, 200
-    
+
+@app.route("/<url_hash>")
+def redirect_to(url_hash):
+    return redirect(acortador.get_url(url_hash))
+
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=False, host='0.0.0.0', port=5000)

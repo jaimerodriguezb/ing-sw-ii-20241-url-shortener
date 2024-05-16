@@ -53,6 +53,9 @@ class AcortadorUrl:
         else:   
             return self.base62_encode(binascii.crc32(url_acortar.encode()))
         
+    def get_url(self, url_corta):
+        return "http://google.com"
+
     def having_ip_address(self, url):
         match = re.search(
             '(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.'
