@@ -114,8 +114,8 @@ def Delete_user_by_email(correo):
     
 # Ejemplo de uso
 # Crear un nuevo usuario
-print(Create_new_user("Ejemplo Usuario", "ejemplo@correo.com", "contraseña123"))
-print(Create_new_user("Ejemplo", "c@w.com", "contraseña123"))
+#print(Create_new_user("Ejemplo Usuario", "ejemplo@correo.com", "contraseña123"))
+#print(Create_new_user("Ejemplo", "c@w.com", "contraseña123"))
 
 # Modificar el conteo de URL acortadas para un usuario
 #print(Modify_conteo_URL_acortadas("ejemplo@correo.com", 10))
@@ -188,14 +188,14 @@ def Create_new_URL(user_email, URL):
         return f"Error al crear la URL: {response.text}"
 
 # Ejemplo de uso
-user_email = "ejemplo@correo.com"
-user_email2 ="c@w.com"
-URL = "https://www.ejemplo.com"
-URL1 = "https://www.asdsadsadsa.com"
-URL2 = "https://www.nan.com"
-print(Create_new_URL(user_email, URL))
-print(Create_new_URL(user_email, URL1))
-print(Create_new_URL(user_email2, URL2))
+#user_email = "ejemplo@correo.com"
+#user_email2 ="c@w.com"
+#URL = "https://www.ejemplo.com"
+#URL1 = "https://www.asdsadsadsa.com"
+#URL2 = "https://www.nan.com"
+#print(Create_new_URL(user_email, URL))
+#print(Create_new_URL(user_email, URL1))
+#print(Create_new_URL(user_email2, URL2))
 
 def get_urls_for_user(user_email):
     # Obtener el ID del usuario basado en el correo electrónico
@@ -225,16 +225,36 @@ def get_urls_for_user(user_email):
     return user_urls
 
 # Ejemplo de uso
-user_email = "ejemplo@correo.com"
-user_urls = get_urls_for_user(user_email)
-print("URLs asociadas al usuario:")
-for url_data in user_urls:
-    print(url_data)
+#user_email = "ejemplo@correo.com"
+#user_urls = get_urls_for_user(user_email)
+#print("URLs asociadas al usuario:")
+#for url_data in user_urls:
+#    print(url_data)
+#
+#print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
 
-print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+#user_email = "c@w.com"
+#user_urls = get_urls_for_user(user_email)
+#print("URLs asociadas al usuario:")
+#for url_data in user_urls:
+#    print(url_data)
 
-user_email = "c@w.com"
-user_urls = get_urls_for_user(user_email)
-print("URLs asociadas al usuario:")
-for url_data in user_urls:
-    print(url_data)
+def get_original_url_from_short_url(short_url):
+    # Consultar los datos de la tabla URL_FOR_USERS
+    urls = Consult_data_from_TABLE_URL_FOR_USERS()
+
+    # Buscar la URL original basada en la Short_URL proporcionada
+    for url_entry in urls:
+        if "Short_URL" in url_entry["properties"]:
+            short_url_in_db = url_entry["properties"]["Short_URL"]["url"]
+            if short_url_in_db == short_url:
+                original_url = url_entry["properties"]["URL"]["url"]
+                return original_url
+
+    # Si no se encuentra la URL acortada, devolver un mensaje indicando el error
+    return "Short URL no encontrada"
+
+# Ejemplo de uso
+#short_url = "https://your-shortening-service.com/1"  # Reemplaza con tu URL acortada
+#original_url = get_original_url_from_short_url(short_url)
+#print(f"La URL original es: {original_url}")
