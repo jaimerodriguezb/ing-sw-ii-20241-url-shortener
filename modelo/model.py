@@ -7,7 +7,17 @@ from googlesearch import search
 import numpy as np
 from tld import get_tld
 import binascii
+from modelo.Conection import conection
 
+class redirection:
+    def redireccionar_url(self, url_acortada):
+        
+        result = conection.get_original_url_from_short_url(url_acortada)
+        if(result == "Short URL no encontrada"):
+            return "Error_404"
+        else:
+            return result
+        
 class AcortadorUrl:
 
     def __init__(self) -> None:
