@@ -38,7 +38,7 @@ class Acortar(Resource):
     def get(self):
         args = parser.parse_args()
         return {
-            "result": 'Su url acortada es: ' + acortador.acortar_url(args['url'])
+            "result": acortador.acortar_url(args['url'])
         }, 200
 
 if __name__ == '__main__':
