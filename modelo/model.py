@@ -6,7 +6,6 @@ import re
 from googlesearch import search
 import numpy as np
 from tld import get_tld
-import binascii
 from modelo.Conection import conection
 
 class redirection:
@@ -34,17 +33,6 @@ class AcortadorUrl:
             return  True
         else:
             return False
-    def base62_encode(self, value):
-        value = int(value)
-        base62chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-        base = len(base62chars)
-        encoded = ''
-        while value > 0:
-            remainder = value % base
-            encoded = base62chars[remainder] + encoded
-            value = int(value / base)
-
-        return encoded
 
     def verificar_pishing(self, url_pishing):
         url_parsed = self.parse_url(url_pishing)
@@ -61,7 +49,7 @@ class AcortadorUrl:
             return "No es posible Acortar la URL, tiene riesgos de Pishing"
         
         else:   
-            return self.base62_encode(binascii.crc32(url_acortar.encode()))
+            return conection.Create_new_URL(url_acortar)
         
     def having_ip_address(self, url):
         match = re.search(
