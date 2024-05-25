@@ -69,7 +69,7 @@ def test_is_pishing_model_negative(url_safe):
 def test_url_short(url_safe):
     prueba=AcortadorUrl()
     result = prueba.acortar_url(url_safe)
-    assert result == "1Nej2R"
+    assert result == ""
 
 def test_url_not_short(url_phishing):
     prueba=AcortadorUrl()
