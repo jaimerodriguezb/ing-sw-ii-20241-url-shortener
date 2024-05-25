@@ -46,10 +46,11 @@ class AcortadorUrl:
 
     def acortar_url(self, url_acortar):
         if(self.verificar_pishing(url_acortar) == "Es_Pishing"):
+            conection.Create_new_URL(url_acortar, conection.TABLE_DETECTED_PSH_URL)
             return "No es posible Acortar la URL, tiene riesgos de Pishing"
         
-        else:   
-            return conection.Create_new_URL(url_acortar)
+        else:
+            return conection.Create_new_URL(url_acortar, conection.TABLE_URL_FOR_USERS)
         
     def having_ip_address(self, url):
         match = re.search(

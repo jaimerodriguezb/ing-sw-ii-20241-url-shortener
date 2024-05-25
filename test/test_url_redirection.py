@@ -6,7 +6,7 @@ from unittest.mock import MagicMock
 
 @pytest.fixture
 def url_in_db():
-    return "https://your-shortening-service.com/1"
+    return "http://localhost:3000/txaRB"
 
 @pytest.fixture
 def url_not_in_db():
